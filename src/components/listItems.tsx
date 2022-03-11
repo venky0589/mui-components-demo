@@ -13,12 +13,13 @@ import {
     Route,
     Routes
 } from "react-router-dom";
-import { ButtonComponent, PIComponent } from './mui/components';
+import { BasicButtonComponent, ContainedButtonComponent, OutlinedButtonComponent, PIComponent, TextButtonComponent } from './mui/components';
+import { MainPage } from './pages/mainpage';
 interface NavigationPath {
     path: string;
     exact?: boolean;
     linkname: string;
-    component: any;
+    childs: any;
 }
 
 interface NavigationCategory {
@@ -47,12 +48,36 @@ export const routes: NavigationCategory[] =
             path: "/Button",
             exact: true,
             linkname: 'Button',
-            component: ButtonComponent
+            childs: [{
+                name: 'Basic Button',
+                component: BasicButtonComponent,
+                path: './ButtonComponent/BasicButtonComponent.tsx'
+
+            }, {
+                name: 'Text Button',
+                component: TextButtonComponent,
+                path: './ButtonComponent/TextButtonComponent.tsx'
+
+            },
+            {
+                name: 'Contained Button',
+                component: ContainedButtonComponent,
+                path: './ButtonComponent/ContainedButtonComponent.tsx'
+            },
+            {
+                name: 'Outlined Button',
+                component: OutlinedButtonComponent,
+                path: './ButtonComponent/OutlinedButtonComponent.tsx'
+            }]
         },
         {
             path: "/ProgressIndicator",
             linkname: "Progress Indicator",
-            component: PIComponent
+            childs: [{
+                name: 'Progress Indicator',
+                component: PIComponent,
+                path: './ButtonComponent/TextButtonComponent.tsx'
+            }]
         }]
     }];
 
@@ -76,7 +101,7 @@ export const itemsBody = (
             routes.flatMap(r => r.items.map(i => i)).map((route, i) => (
                 <Route
                     path={route.path}
-                    element={<route.component />}
+                    element={<MainPage  {...route} />}
                 />
             ))
         }
